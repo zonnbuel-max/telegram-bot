@@ -19,7 +19,7 @@ Aqui você recebe avisos e acessa o conteúdo VIP.
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = InlineKeyboardMarkup()
-    btn = InlineKeyboardButton("🔥 Entrar no VIP", url="https://t.me/+SEU_GRUPO_AQUI")
+    btn = InlineKeyboardButton("🔥 Entrar no VIP", url="https://t.me/+iBTzelGNDCo3Y2Fk")
     markup.add(btn)
 
     bot.send_photo(
