@@ -1,45 +1,37 @@
 import telebot
-from telebot import types
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-# ----------------------------------------
-#  INSIRA SEU TOKEN AQUI:
-# ----------------------------------------
-TOKEN = "7621709259:AAGjv3pC2iFZekJ6D34l50TelvC4cFkdIsM"
-
+TOKEN = "7621709259:AAGjv3pC2iFZekJ6D34l50TelvC4cFkdIsM"  # <-- coloque seu token aqui
 bot = telebot.TeleBot(TOKEN)
 
-# ----------------------------------------
-# /start
-# ----------------------------------------
+# -------------------------------------------------------
+# FOTO DO BOT
+# -------------------------------------------------------
+FOTO_URL = "https://i.postimg.cc/j55S8JjX/IMG-20251117-WA0033.jpg"
+TEXTO_INICIAL = """
+🔔 *Bem-vindo ao Bot!*  
+Aqui você recebe avisos e acessa o conteúdo VIP.
+"""
+
+# -------------------------------------------------------
+# COMANDO /start
+# -------------------------------------------------------
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = types.InlineKeyboardMarkup()
-    btn1 = types.InlineKeyboardButton("⚡ Entrar no VIP", callback_data="vip")
-    btn2 = types.InlineKeyboardButton("📞 Suporte", url="https://t.me/seu_usuario_aqui")
-    markup.add(btn1, btn2)
+    markup = InlineKeyboardMarkup()
+    btn = InlineKeyboardButton("🔥 Entrar no VIP", url="https://t.me/+SEU_GRUPO_AQUI")
+    markup.add(btn)
 
     bot.send_photo(
         message.chat.id,
-        "https://i.imgur.com/0rR7w1C.jpeg",  # FOTO EXEMPLO (PODE TROCAR DEPOIS)
-        caption="🔥 *Bem-vindo ao bot oficial!* \nEscolha uma opção abaixo 👇",
-        reply_markup=markup,
-        parse_mode="Markdown"
+        FOTO_URL,
+        caption=TEXTO_INICIAL,
+        parse_mode="Markdown",
+        reply_markup=markup
     )
 
-# ----------------------------------------
-# Botões
-# ----------------------------------------
-@bot.callback_query_handler(func=lambda call: True)
-def callback(call):
-    if call.data == "vip":
-        bot.answer_callback_query(call.id)
-        bot.send_message(
-            call.message.chat.id,
-            "💎 Para entrar no grupo VIP, finalize seu pagamento.\n"
-            "Enviei o link pra você!"
-        )
-
-# ----------------------------------------
-# Mantém o bot rodando
-# ----------------------------------------
+# -------------------------------------------------------
+# LOOP INFINITO DO BOT
+# -------------------------------------------------------
+print("Bot está rodando corretamente...")
 bot.infinity_polling()
